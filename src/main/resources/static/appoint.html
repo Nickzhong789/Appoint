@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Appoint</title>
+    <script type="text/javascript" src="/js/jquery-1.12.3.min.js"></script>
+    <script type="text/javascript" src="/js/func.js"></script>
+  </head>
+  <body>
+    <label>请选择预约时段：</label>
+    <select  id="aTime">
+      <option selected="selected"></option>
+      <option></option>
+      <option></option>
+      <option></option>
+    </select>
+    <select class="" id="is_drive">
+      <option value="0" select="selected">是</option>
+      <option value="1">否</option>
+    </select>
+    <br><br>
+    <label>请添加预约人信息</label>
+    <a href="#" id="addPerson"><img src="/img/add.jpg" height="20" width="20"/></a>
+
+    <div class="" id="inArea" height="80"></div><br>
+    <button type="button" id="btn">Submit</button><br><br>
+    <span id="msg" style="color: red"></span>
+
+    <script type="text/javascript">
+
+      var date = new Date().toLocaleDateString();
+      var dateList = date.split('/');
+      var time_subtract = ['上午', '下午'];
+      var idx = 0;
+      $("#aTime option").each(function(){
+          var tag = idx < 2 ? 1 : 2;
+          var dateString = dateList[0] + '年' + dateList[1] + '月'
+                  + (parseInt(dateList[2])+tag).toString() + '日' + time_subtract[idx%2];
+          var opt = $(this).text(dateString);
+          idx++;
+      });
+
+      var count = 0;
+
+      var addInput = function() {
+        var _arr = [];
+        var div = $('<div id="div_in' + count.toString() + '"></div>"');
+        _arr.push('<label>预约人' + (count+1).toString() +'：</label>'
+                  +'<input type="text" placeholder="请输入姓名" id="name_in' + count.toString() + '"/>&nbsp&nbsp&nbsp&nbsp'
+                  + '<input type="text" placeholder="请输入身份证号" id="id_in' + count.toString() + '"/>&nbsp&nbsp&nbsp&nbsp'
+                  + '<input type="text" placeholder="请输入手机号" id="phone_in' + count.toString() + '"/><br>'
+                );
+        var div_in = $("#inArea");
+
+        div_in.append(_arr.join(""))
+        count++;
+      };
+      $("#addPerson").on('click', addInput);
+
+      var make_appoint = function() {
+        var _data = {};
+        var datas = {}
+        for(var i=0; i<count; i++) {
+          var name = $("#name_in" + i.toString()).val();
+          if (name) {
+            var id_num = $("#id_in" + i.toString()).val();
+            var phone = $("#phone_in" + i.toString()).val();
+            if (id_num && phone) {
+              var data = {};
+              data['name'] = name;
+              data['id_num'] = id_num;
+              data['phone'] = phone;
+              datas['data' + i.toString()] = data;
+            }
+            else {
+              $("#msg").text("请输入第" + (i+1).toString() + "位预约人的完整信息")
+              return;
+            }
+          }
+          else {
+            continue;
+          }
+        }
+        _data['datas'] = datas;
+        var userName = getUrlParam("userName");
+        var is_drive = parseInt($("#is_drive").find("option:selected").val());
+        var carNum = is_drive = 0 ? "hhh" : "粤ACZ560-粤ACZ570-粤ACZ580";
+        _data['userName'] = userName;
+        _data['is_drive'] = is_drive;
+        _data['carNum'] = carNum;
+        _data['status'] = 0;
+        _data['date'] = $("#aTime").find("option:selected").text();
+        var jsonData = JSON.stringify(_data);
+        console.log(jsonData);
+      };
+
+      $("#btn").on('click', make_appoint);
+
+    </script>
+  </body>
+</html>

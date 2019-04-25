@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Main</title>
+    <script type="text/javascript" src="/js/jquery-1.12.3.min.js"></script>
+    <script type="text/javascript" src="/js/func.js"></script>
+  </head>
+  <body>
+    <span id="u_text"></span><br><br>
+    <a href="#" id="toSignUp">管理</a>
+
+    <script type="text/javascript">
+      if (getUrlParam("adName")) {
+        var adName = getUrlParam("adName");
+        $("#u_text").text("您好，" + adName);
+
+        $("#toSignUp").on('click', function(){
+          window.location.href = "/appoint.html?userName=" + userName;
+        });
+      }
+      else {
+        window.location.href = "/";
+      }
+
+
+
+    </script>
+  </body>
+</html>

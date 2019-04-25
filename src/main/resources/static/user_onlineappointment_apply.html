@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>华农赏花预约系统-预约申请</title>
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+  <style> *{ margin:0; padding:0; } </style>
+  <script type="text/javascript" src="/js/jquery-1.12.3.min.js"></script>
+  <script type="text/javascript" src="/js/func.js"></script>
+</head>
+
+<body style="background-color:rgba(204,204,204,0.2)" width:100%; height:100%>
+<div class="container-fluid">
+  <div class="row">
+    <div class="page-header" style="background-color:rgba(255,255,255,0.6);">
+      <table  width="100%" height="100px" margin="0" style="vertical-align:bottom" >
+        <tr>
+        <th><h4> &nbsp &nbsp <img src="/img/scau_logol.png" alt="华农logo" margin:"0"></h4></th>
+
+        <td style="text-align:left; vertical-align:bottom">
+            <label id="today"></label><br>
+            <label id="high"><h5></h5></label>/
+            <label id="low"><h5></h5></label>/
+            <label id="type"><h5></h5></label>
+        </td>
+
+        <td style="text-align:left; vertical-align:bottom">
+            <label>华农实时：</label><br>
+            游客数：<label id="people_num"><h5></h5></label>&nbsp&nbsp/&nbsp&nbsp车辆数：<label id="car_num"><h5></h5></label>
+        </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+
+  <div class="row">
+
+    <div class="col-sm-1" style="background-color:rgba(0,0,0,0); height:100px"></div>
+
+    <div class="col-sm-2" style="background-color:rgba(204, 204, 204, 0.5);(255,255,255); height:535px; ">
+        <div class="col-sm-2" style="text-align:center; background-color:rgba(255,255,255,1); width:100%; margin-top:20px; padding:0">
+        <ul class="nav nav-pills nav-stacked">
+            <li><h4>个人中心</h4></li>
+            <li role="presentation"><a href="#" id="toSfAuthen">校友认证</a></li>
+            <li role="presentation"><a href="#" id="toModifyPass">修改密码</a></li>
+            <li role="presentation"><a href="#" id="toMyAppoint">我的预约</a></li>
+        </ul>
+        </div>
+
+        <div class="col-sm-2" style="text-align:center; background-color:rgba(255,255,255,1); width:100%; margin-top:20px; padding:0">
+        <ul class="nav nav-pills nav-stacked">
+            <li><h4>在线预约</h4></li>
+            <li role="presentation"><a href="#" id="toAppointLeft">预约余量</a></li>
+            <li role="presentation" class="active"><a href="#">预约申请</a></li>
+        </ul>
+        </div>
+
+        <div class="col-sm-2" style="text-align:center; background-color:rgba(255,255,255,1); width:100%; margin-top:20px; padding:0">
+        <ul class="nav nav-pills nav-stacked">
+            <li><h4>华农资讯</h4></li>
+            <li role="presentation"><a href="#" id="toScauBulletin">公&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp告</a></li>
+            <li role="presentation"><a href="#" id="toScauStrategy">华农攻略</a></li>
+            <li role="presentation"><a href="#" id="toScauActivity">华农活动</a></li>
+        </ul>
+        </div>
+    </div>
+
+    <div class="col-sm-8" style="background-color:rgb(255,255,255); height:535px; margin-left:50px;">
+      <div class="col-sm-12" style="margin-top:">
+        <label><h4><font color="red">*</font>请选择预约时段：</h4></label>
+        <select  id="aTime">
+          <option selected="selected"></option>
+          <option></option>
+          <option></option>
+          <option></option>
+        </select>
+      </div>
+
+
+      <div class="col-sm-12">
+        <label><h4><font color="red">*</font>请选择预约者：</h4></label>
+        <table class="table_hhh table-striped table-hover" frame="box" style="width:100%; ">
+          <tbody id="tb_appoint">
+            <!-- <tr>
+              <th><input type="checkbox" value=""></th>
+              <td><h5><strong>初中生</strong></th>
+              <td><h5>4407xx</td>
+              <td><h5>186</td>
+              <td><button class="btn btn-default" type="button" style="width:100%">修改</button></th>
+            </tr> -->
+          </tbody>
+        </table>
+
+      </div>
+
+
+      <div class="col-sm-12" margin-top="">
+        <label><h4><font color="red">*</font>请选择是否驾车入校：</h4></label>
+        <select class="" id="is_drive">
+          <option value="0" select="selected">否</option>
+          <option value="1">是</option>
+        </select>
+
+        <table style="width:50%; display:none" id="carNum">
+          <tbody>
+            <tr>
+              <th width="20%"><h4><font color="red">*</font>请填写车牌号码：</h4></th>
+              <td width="30%"><input type="text" class="form-control" id="Car_Number" placeholder="Car_Number"></td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+
+      <div class="col-sm-12" align="center" margin-top="10px">
+        <button class="btn btn-default" type="button" id="btn">提交预约</button>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+
+  if (getUrlParam("userName")) {
+    var userName = getUrlParam("userName");
+  }
+  else {
+    window.location.href = "/";
+  }
+
+  var date = new Date().toLocaleDateString();
+  var dateList = date.split('/');
+  var time_subtract = ['上午', '下午'];
+  var idx = 0;
+  $("#aTime option").each(function(){
+      var tag = idx < 2 ? 1 : 2;
+      var dateString = dateList[0] + '年' + dateList[1] + '月'
+              + (parseInt(dateList[2])+tag).toString() + '日' + time_subtract[idx%2];
+      var opt = $(this).text(dateString);
+      idx++;
+  });
+
+  var date = new Date().toLocaleDateString();
+  var dateList = date.split('/');
+  var today = dateList[1] + '月' + dateList[2] + '日';
+  $.get('/weatherFormat.json', "", function(res) {
+      var forecast = res['data']['forecast'];
+      $("#today").text(dateList[1] + '月'+ forecast[0]['date']);
+      $("#high").text(forecast[0]['high']);
+      $("#low").text(forecast[0]['low']);
+      $("#type").text(forecast[0]['type']);
+  });
+  $.get('/getAppointMsgToday', "date="+today, function(res) {
+      $("#people_num").text(res['p_num']);
+      $("#car_num").text(res['car_num']);
+  });
+
+  var t = $("#carNum");
+  $("#is_drive").on('change', function() {
+    var is_drive = parseInt($("#is_drive").find("option:selected").val());
+    console.log(is_drive);
+    if (is_drive) {
+      t.css("display", "block");
+    }
+    else {
+      t.css("display", "none");
+    }
+  });
+  var url = "/getCertification";
+  var _data = "userName=" + userName;
+  var contact_list = {};
+  $.get(url, _data, function(res) {
+      var idx = "0";
+      $.each(res, function(index, data) {
+          var tbody = $("#tb_appoint");
+          var tr = $("<tr></tr>");
+          tr.html('<th><input type="checkbox" name="cb" value=""></th>'
+            +'<td><h5><strong>' + data['cerName'] + '</strong></td>'
+            +'<td><h5>' + data['idNum'] + '</td>'
+            +'<td><h5>' + data['phone'] + '</td>'
+            +'<td><a href="#" class="btn btn-default" type="button" style="width:100%">修改</a></th>'
+          );
+          tbody.append(tr);
+          contact_list[idx] = data;
+          idx++
+      });
+  });
+
+  var submit_appoint = function() {
+    console.log(contact_list);
+    var count = "0";
+    /*
+   {"datas":
+     {"data0":
+       {"name":"agvsfsa","id_num":"1412341234","phone":"7546767457"},
+     "data1":
+       {"name":"dafasd","id_num":"523452345","phone":"324523535"},
+     "data2":
+       {"name":"adfaacs","id_num":"412341241","phone":"532452345"}
+     },
+   "userName":"Nick",
+   "is_drive":"0",
+   "carNum":"粤ACZ560",
+   "date":"2018年6月10日上午"}
+   */
+    var _appointData = {}
+    var _datas = {}
+    $.each($("input[name='cb']"), function(index, el) {
+      if($(this).is(":checked")){
+          _datas['data'+count] = contact_list[count];
+      }
+      count++;
+    });
+    _appointData['datas'] = _datas;
+    _appointData['userName'] = userName;
+    var is_drive = parseInt($("#is_drive").find("option:selected").val());
+    _appointData['is_drive'] = is_drive;
+    _appointData['carNum'] = is_drive == 0 ? "" : $("#Car_Number").val();
+    _appointData['date'] = $("#aTime").find("option:selected").text();
+    _appointData['status'] = 0;
+    jsonData = JSON.stringify(_appointData);
+    console.log(jsonData);
+
+    $.ajax({
+      type: 'POST',
+      data: jsonData,
+      url: '/appoint',
+      contentType: "application/json;charset=UTF-8",
+      success: function(res) {
+        alert("预约成功！");
+        window.location.reload();
+      }
+    });
+  }
+  $("#btn").on('click', submit_appoint);
+
+  $("#toModifyPass").attr('href', '/user_personalcenter_passwchange.html?userName=' + userName);
+  $("#toMyAppoint").attr('href', '/user_personalcenter_myreservation.html?userName=' + userName);
+  $("#toAppointApply").attr('href', '/user_onlineappointment_apply.html?userName=' + userName);
+  $("#toAppointLeft").attr('href', '/user_onlineappointment_left.html?userName=' + userName);
+  $("#toSfAuthen").attr('href', '/user_personalcenter_schoolfellow.html?userName=' + userName);
+  $("#toScauBulletin").attr('href', '/user_scaunews_bulletin.html?userName=' + userName);
+  $("#toScauStrategy").attr('href', '/user_scaunews_strategy.html?userName=' + userName);
+  $("#toScauActivity").attr('href', '/user_scaunews_activity1.html?userName=' + userName);
+
+</script>
+
+</body>
+</html>

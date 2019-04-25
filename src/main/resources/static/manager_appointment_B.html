@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>华农赏花预约系统-预约管理</title>
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+  <script type="text/javascript" src="/js/jquery-1.12.3.min.js"></script>
+  <script type="text/javascript" src="/js/func.js"></script>
+  <script type="text/javascript" src="/js/bootstrap.js"></script>
+  <style> *{ margin:0; padding:0; } </style>
+</head>
+
+<body style="background-color:rgba(204,204,204,0.2)" width:100%; height:100%>
+<div class="container-fluid">
+
+<div class="row">
+  <div class="page-header" style="background-color:rgba(255,255,255,0.6);">
+    <table  width="100%" height="100px" margin="0" style="vertical-align:bottom" >
+      <tr>
+      <th><h4> &nbsp &nbsp <img src="/img/scau_logol.png" alt="华农logo" margin:"0"></h4></th>
+
+      <td style="text-align:left; vertical-align:bottom">
+          <label id="today"></label><br>
+          <label id="high"><h5></h5></label>/
+          <label id="low"><h5></h5></label>/
+          <label id="type"><h5></h5></label>
+      </td>
+
+      <td style="text-align:left; vertical-align:bottom">
+          <label>华农实时：</label><br>
+          游客数：<label id="people_num"><h5></h5></label>&nbsp&nbsp/&nbsp&nbsp车辆数：<label id="car_num"><h5></h5></label>
+      </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+
+
+<div class="row">
+
+  <div class="col-sm-1" style="background-color:rgba(0,0,0,0); height:100px"></div>
+
+  <div class="col-sm-2" style="background-color:rgba(204, 204, 204, 0.5);(255,255,255); height:535px; ">
+
+    <div class="col-sm-2" style="text-align:center; background-color:rgba(255,255,255,1); width:100%; margin-top:20px; padding:0">
+    <ul class="nav nav-pills nav-stacked">
+        <li role="presentation"><a href="#" id="toUserManage">用户管理</a></li>
+    </ul>
+    </div>
+
+    <div class="col-sm-2" style="text-align:center; background-color:rgba(255,255,255,1); width:100%; margin-top:20px; padding:0">
+    <ul class="nav nav-pills nav-stacked">
+        <li role="presentation"><a href="#" id="toSfManage">校友管理</a></li>
+    </ul>
+    </div>
+
+    <div class="col-sm-2" style="text-align:center; background-color:rgba(255,255,255,1); width:100%; margin-top:20px; padding:0">
+    <ul class="nav nav-pills nav-stacked">
+        <li role="presentation" class="active"><a href="#">预约管理</a></li>
+    </ul>
+    </div>
+  </div>
+
+    <div class="col-sm-8" style="background-color:rgb(255,255,255); height:535px; margin-left:50px;">
+
+      <ul class="nav nav-tabs nav-justified" style="margin-top:10px">
+
+          <li role="presentation">
+            <a href="#" id="appointSearch">预约情况</a>
+          </li>
+          <li role="presentation" class="active">
+            <a href="#">添加查询</a>
+          </li>
+      </ul>
+        <div class="col-sm-12" style=" margin-top:10px">
+          <table>
+            <tbody>
+              <tr>
+                <td><input type="text" class="form-control" placeholder="用户名" id="uname_in"></td>
+                <td><input type="text" class="form-control" placeholder="预约者姓名" id="aname_in"></td>
+                <td><input type="text" class="form-control" placeholder="身份证号"  id="id_in"></td>
+                <td><input type="text" class="form-control" placeholder="联系电话" id="phone_in"></td>
+                <td><input type="text" class="form-control" placeholder="车牌号码" id="car_in"></td>
+                <td><input type="text" class="form-control" placeholder="预约日期" id="date_in"></td>
+                <td><button class="btn btn-default" type="button" id="add_btn">添加预约者</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="col-sm-12" style=" margin-top:10px">
+          <table>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="用户名" id="s_uname">
+                    <span class="input-group-btn"><button class="btn btn-default" type="button" id="s_uname_btn">搜索</button></span>
+                  </div>
+                </td>
+
+                <td>
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="姓名" id="s_aname">
+                    <span class="input-group-btn"><button class="btn btn-default" type="button" id="s_aname_btn">搜索</button></span>
+                  </div>
+                </td>
+
+                <td>
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="身份证号" id="s_id">
+                    <span class="input-group-btn"><button class="btn btn-default" type="button" id="s_id_btn">搜索</button></span>
+                  </div>
+                </td>
+
+                <td>
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="联系电话" id="s_phone">
+                    <span class="input-group-btn"><button class="btn btn-default" type="button" id="s_phone_btn">搜索</button></span>
+                  </div>
+                </td>
+
+                <td>
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="车牌号码" id="s_car">
+                    <span class="input-group-btn"><button class="btn btn-default" type="button" id="s_car_btn">搜索</button></span>
+                  </div>
+                </td>
+
+                <td>
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="预约日期" id="s_date">
+                    <span class="input-group-btn"><button class="btn btn-default" type="button" id="s_date_btn">搜索</button></span>
+                  </div>
+                </td>
+
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="col-sm-12" style="margin-top:10px">
+          <table class="table">
+            <tbody>
+              <tr class="success">
+                <th width="16.7%">用户名</th>
+                <th width="16.7%">真实姓名</th>
+                <th width="16.7%">身份证号</th>
+                <th width="16.7%">联系电话</th>
+                <th width="16.7%">车牌号码</th>
+                <th width="16.7%">预约日期</th>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="col-sm-12"  style="height:320px; overflow-y:auto;">
+          <table class="table table-hover">
+            <tbody class="table-striped" id="tb_msg">
+              <tr>
+                <!-- <td width="20%">bla</td><td width="20%">bla</td><td width="20%">bla</td><td width="20%">bla</td><td width="20%">balabala</td> -->
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+    </div>
+
+
+</div>
+</div>
+</body>
+<script type="text/javascript">
+    if (getUrlParam("adName")) {
+      var adName = getUrlParam("adName");
+    }
+    else {
+      window.location.href = "/";
+    }
+
+    var date = new Date().toLocaleDateString();
+    var dateList = date.split('/');
+
+    var today = dateList[1] + '月' + dateList[2] + '日';
+    $.get('/getWeather/广州', "", function(res) { res = JSON.parse(res);
+        var forecast = res['data']['forecast'];
+        $("#today").text(dateList[1] + '月'+ forecast[0]['date']);
+        $("#high").text(forecast[0]['high']);
+        $("#low").text(forecast[0]['low']);
+        $("#type").text(forecast[0]['type']);
+    });
+    $.get('/getAppointMsgToday', "date="+today, function(res) {
+        $("#people_num").text(res['p_num']);
+        $("#car_num").text(res['car_num']);
+    });
+    var addAppoint = function() {
+      var uname = $("#uname_in").val();
+      var aname = $("#aname_in").val();
+      var id = $("#id_in").val();
+      var phone = $("#phone_in").val();
+      var car = $("#car_in").val();
+      var date = $("#date_in").val();
+      var url = "/appoint";
+      var _data = {};
+      var datas = {};
+      var data0 = {};
+      if (uname && aname && id && phone && date) {
+        _data['date'] = date;
+        data0['cerName'] = aname;
+        data0['idNum'] = id;
+        data0['phone'] = phone;
+        datas['data0'] = data0;
+        _data['userName'] = uname;
+        _data['is_drive'] = car == "" ? 0 : 1;
+        _data['carNum'] = car;
+        _data['datas'] = datas;
+        _data['status'] = 0;
+        jsonData = JSON.stringify(_data);
+         /*
+        {"datas":
+          {"data0":
+            {"name":"agvsfsa","id_num":"1412341234","phone":"7546767457"},
+          "data1":
+            {"name":"dafasd","id_num":"523452345","phone":"324523535"},
+          "data2":
+            {"name":"adfaacs","id_num":"412341241","phone":"532452345"}
+          },
+        "userName":"Nick",
+        "is_drive":"0",
+        "carNum":"粤ACZ560",
+        "date":"2018年6月10日上午"}
+        */
+        console.log(jsonData);
+        $.ajax({
+          type: 'POST',
+          data: jsonData,
+          url: url,
+          contentType: "application/json;charset=UTF-8",
+          success: function(res) {
+            alert("预约成功！");
+            window.location.reload();
+          }
+        });
+      }
+      else {
+        alert("填入信息不完整！");
+      }
+    }
+
+    $("#add_btn").on('click', addAppoint);
+
+    // var _list = {
+    //               {"u_name" : $("#s_uname").val(), "btn" : $("#s_uname_btn")}
+    //             }
+
+    var getByAname = function() {
+      var tbody = $("#tb_msg");
+      tbody.html("");
+      var aname = $("#s_aname").val();
+      var url = "/getAppointByContact";
+      var _data = "contact=" + aname;
+      var tbody = $("#tb_msg");
+      $.get(url, _data, function(res) {
+          $.each(res, function(index, data) {
+              var tr = $("<tr></tr>");
+              tr.html('<td width="16.7%">'+ data['userName'] + '</td>'
+                    + '<td width="16.7%">'+ data['conName'] + '</td>'
+                    + '<td width="16.7%">'+ data['idNum'] + '</td>'
+                    + '<td width="16.7%">'+ data['phone'] + '</td>'
+                    + '<td width="16.7%">'+ data['carNum'] + '</td>'
+                    + '<td width="16.7%">'+ data['date'] + '</td>'
+              );
+              tbody.append(tr);
+          });
+      });
+    }
+    $("#s_aname_btn").on('click', getByAname);
+
+    var getByUser = function() {
+      var tbody = $("#tb_msg");
+      tbody.html("");
+      var uname = $("#s_uname").val();
+      var url = "/getAppointByUname";
+      var _data = "uName=" + uname;
+      var tbody = $("#tb_msg");
+      $.get(url, _data, function(res) {
+          $.each(res, function(index, data) {
+              var tr = $("<tr></tr>");
+              tr.html('<td width="16.7%">'+ data['userName'] + '</td>'
+                    + '<td width="16.7%">'+ data['conName'] + '</td>'
+                    + '<td width="16.7%">'+ data['idNum'] + '</td>'
+                    + '<td width="16.7%">'+ data['phone'] + '</td>'
+                    + '<td width="16.7%">'+ data['carNum'] + '</td>'
+                    + '<td width="16.7%">'+ data['date'] + '</td>'
+              );
+              tbody.append(tr);
+          });
+      });
+    }
+    $("#s_uname_btn").on('click', getByUser);
+
+    var getById = function() {
+      var tbody = $("#tb_msg");
+      tbody.html("");
+      var idNum = $("#s_id").val();
+      var url = "/getAppointByIdNum";
+      var _data = "idNum=" + idNum;
+      var tbody = $("#tb_msg");
+      $.get(url, _data, function(res) {
+          $.each(res, function(index, data) {
+              var tr = $("<tr></tr>");
+              tr.html('<td width="16.7%">'+ data['userName'] + '</td>'
+                    + '<td width="16.7%">'+ data['conName'] + '</td>'
+                    + '<td width="16.7%">'+ data['idNum'] + '</td>'
+                    + '<td width="16.7%">'+ data['phone'] + '</td>'
+                    + '<td width="16.7%">'+ data['carNum'] + '</td>'
+                    + '<td width="16.7%">'+ data['date'] + '</td>'
+              );
+              tbody.append(tr);
+          });
+      });
+    }
+    $("#s_id_btn").on('click', getById);
+
+    var getByPhone = function() {
+      var tbody = $("#tb_msg");
+      tbody.html("");
+      var phone = $("#s_phone").val();
+      var url = "/getAppointByPhone";
+      var _data = "phone=" + phone;
+      var tbody = $("#tb_msg");
+      $.get(url, _data, function(res) {
+          $.each(res, function(index, data) {
+              var tr = $("<tr></tr>");
+              tr.html('<td width="16.7%">'+ data['userName'] + '</td>'
+                    + '<td width="16.7%">'+ data['conName'] + '</td>'
+                    + '<td width="16.7%">'+ data['idNum'] + '</td>'
+                    + '<td width="16.7%">'+ data['phone'] + '</td>'
+                    + '<td width="16.7%">'+ data['carNum'] + '</td>'
+                    + '<td width="16.7%">'+ data['date'] + '</td>'
+              );
+              tbody.append(tr);
+          });
+      });
+    }
+    $("#s_phone_btn").on('click', getByPhone);
+
+    var getByCar = function() {
+      var tbody = $("#tb_msg");
+      tbody.html("");
+      var car = $("#s_car").val();
+      var url = "/getAppointByCar";
+      var _data = "car=" + car;
+      var tbody = $("#tb_msg");
+      $.get(url, _data, function(res) {
+          $.each(res, function(index, data) {
+              var tr = $("<tr></tr>");
+              tr.html('<td width="16.7%">'+ data['userName'] + '</td>'
+                    + '<td width="16.7%">'+ data['conName'] + '</td>'
+                    + '<td width="16.7%">'+ data['idNum'] + '</td>'
+                    + '<td width="16.7%">'+ data['phone'] + '</td>'
+                    + '<td width="16.7%">'+ data['carNum'] + '</td>'
+                    + '<td width="16.7%">'+ data['date'] + '</td>'
+              );
+              tbody.append(tr);
+          });
+      });
+    }
+    $("#s_car_btn").on('click', getByCar);
+
+    var getByDate = function() {
+      var tbody = $("#tb_msg");
+      tbody.html("");
+      var date = $("#s_date").val();
+      var url = "/getAppointByDate";
+      var _data = "date=" + date;
+
+      $.get(url, _data, function(res) {
+          $.each(res, function(index, data) {
+              var tr = $("<tr></tr>");
+              tr.html('<td width="16.7%">'+ data['userName'] + '</td>'
+                    + '<td width="16.7%">'+ data['conName'] + '</td>'
+                    + '<td width="16.7%">'+ data['idNum'] + '</td>'
+                    + '<td width="16.7%">'+ data['phone'] + '</td>'
+                    + '<td width="16.7%">'+ data['carNum'] + '</td>'
+                    + '<td width="16.7%">'+ data['date'] + '</td>'
+              );
+              tbody.append(tr);
+          });
+      });
+    }
+    $("#s_date_btn").on('click', getByDate);
+
+    $("#toUserManage").attr('href', '/manager_user.html?adName=' + adName);
+    $("#appointSearch").attr('href', '/manager_appointment_A.html?adName=' + adName);
+    $("#toSfManage").attr('href', '/manager_schoolfellow_A.html?adName=' + adName);
+
+</script>
+</html>

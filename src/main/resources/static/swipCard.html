@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>出入登记</title>
+    <script type="text/javascript" src="/js/jquery-1.12.3.min.js"></script>
+    <script type="text/javascript" src="/js/func.js"></script>
+  </head>
+  <body>
+    <a href="#" id="enter">进校</a><br>
+    <a href="#" id="exit">离开</a><br><br>
+    <span id="msg" style="color:red; "></span><br><br>
+    <span id="fee" style="color:red; "></span>
+
+    <script type="text/javascript">
+    if (getUrlParam("userName") && getUrlParam("carNum")) {
+      var userName = getUrlParam("userName");
+      $("#msg").text("您好，" + userName);
+
+      var carNum = getUrlParam("carNum");
+
+
+    }
+    else {
+      window.location.href = "/";
+    </script>
+  </body>
+</html>

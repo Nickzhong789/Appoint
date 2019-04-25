@@ -1,0 +1,24 @@
+server:
+  port: 8080
+
+
+hhhSize: 10086
+content: "hhh: ${hhhSize}"
+web.upload-path: "C:\Users\初中生\Desktop\Appoint\src\main\resources\static\img_upload"
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: "jdbc:mysql://localhost:330/appoint?characterEncoding=utf8"
+    username: "root"
+    password: "789"
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  servlet:
+    multipart:
+      max-file-size: 50Mb
+      max-request-size: 50Mb
+6

@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
+
+  <title>华农赏花预约系统-首页</title>
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="../../../../target/classes/static/user_onlineappointment_left.html.html">
+
+  <style type="text/css">
+        #frame {/*----------图片轮播相框容器----------*/
+            position:absolute;
+            z-index:-1;
+            width:100%;
+            height: 100%;
+            margin:0;
+            overflow: hidden;/*--相框作用，只显示一个图片---*/
+            border-radius:5px;
+        }
+        #photos img {
+            float: left;
+            width:20%;
+            height:auto;
+        }
+        #photos {/*---设置总的图片宽度--通过位移来达到轮播效果----*/
+            position: absolute;
+            /* z-index:9px; */
+            width: calc(100% * 5);/*---修改图片数量的话需要修改下面的动画参数*/
+            margin:0;
+        }
+        .play{
+            animation: ma 20s ease-out infinite alternate;/**/
+        }
+        @keyframes ma {/*---每图片切换有两个阶段：位移切换和静置。中间的效果可以任意定制----*/
+            0%,20% {        margin-left: 0px;       }
+            25%,40% {       margin-left: -100%;    }
+            45%,60% {       margin-left: -200%;    }
+            65%,80% {       margin-left: -300%;    }
+            85%,100% {      margin-left: -400%;   }
+        }
+        .num{
+            position:absolute;z-index:10;
+            display:inline-block;
+            right:15px;bottom:50px;
+            border-radius:100%;
+            background:#f00;
+            width:25px;height:25px;
+            line-height:25px;
+            cursor:pointer;
+            color:#fff;
+            text-align:center;
+            opacity:0.8;
+        }
+        .num:hover{background:#00f;}
+        .num:hover,#photos:hover{animation-play-state:paused;}
+        .num:nth-child(2){margin-right:30px}
+        .num:nth-child(3){margin-right:60px}
+        .num:nth-child(4){margin-right:90px}
+        .num:nth-child(5){margin-right:120px}
+        #a1:hover ~ #photos{animation: ma1 .5s ease-out forwards;}
+        #a2:hover ~ #photos{animation: ma2 .5s ease-out forwards;}
+        #a3:hover ~ #photos{animation: ma3 .5s ease-out forwards;}
+        #a4:hover ~ #photos{animation: ma4 .5s ease-out forwards;}
+        #a5:hover ~ #photos {animation: ma5 .5s ease-out forwards;}
+        @keyframes ma1 {0%{margin-left:-400%;}100%{margin-left:-0px;} }
+        @keyframes ma2 {0%{margin-left:-400%;}100%{margin-left:-100%;}   }
+        @keyframes ma3 {100%{margin-left:-200%;}   }
+        @keyframes ma4 {100%{margin-left:-300%;}   }
+        @keyframes ma5 {100%{margin-left:-400%;}   }
+  </style>
+
+  <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="/js/bootstrap.js"></script>
+  <script type="text/javascript" src="/js/func.js"></script>
+</head>
+
+<body style="height:100%; overflow:hidden;">
+
+<div class="container-fluid">
+<div class="row_hhh" >
+    <div class="col-sm-12" id="frame">
+      <a id="a1" class="num">1</a>
+      <a id="a2" class="num">2</a>
+      <a id="a3" class="num">3</a>
+      <a id="a4" class="num">4</a>
+      <a id="a5" class="num">5</a>
+      <div id="photos" class="play">
+            <img src="/img/home_bg1.jpg" width="100%" height="auto">
+            <img src="/img/home_bg2.jpg" width="100%" height="auto">
+            <img src="/img/home_bg3.jpg" width="100%" height="auto">
+            <img src="/img/home_bg4.jpg" width="100%" height="auto">
+            <img src="/img/home_bg5.jpg" width="100%" height="auto">
+      </div>
+      </div>
+</div>
+
+<div class="row">
+
+  <div class="page-header" style="background-color:rgba(255,255,255,0.6);">
+  <table  width="100%" height="100px" margin="0" style="vertical-align:bottom" >
+    <tr>
+    <th><h4> &nbsp &nbsp <img src="/img/scau_logol.png" alt="华农logo" margin:"0"></h4></th>
+
+    <td style="text-align:left; vertical-align:bottom">
+      <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          个人中心 <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a href="#" id="toSfAuthen">校友认证</a></li>
+          <li><a href="#" id="toModifyPass">修改密码</a></li>
+          <li><a href="#" id="toMyAppoint">我的预约</a></li>
+        </ul>
+      </div>
+
+      <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          在线预约 <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a href="#" id="toAppointLeft">预约余量</a></li>
+          <li><a href="#" id="toAppointApply">预约申请</a></li>
+        </ul>
+      </div>
+
+      <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          华农资讯 <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a href="#" id="toScauBulletin">公&nbsp&nbsp告</a></li>
+          <li><a href="#" id="toScauStrategy">华农攻略</a></li>
+          <li><a href="#" id="toScauActivity">华农活动</a></li>
+        </ul>
+      </div>
+    </td>
+
+    <td style="text-align:left; vertical-align:bottom">
+        <label id="today"></label><br>
+        <label id="high"><h5></h5></label>/
+        <label id="low"><h5></h5></label>/
+        <label id="type"><h5></h5></label>
+    </td>
+
+    <td style="text-align:left; vertical-align:bottom">
+        <label>华农实时：</label><br>
+        游客数：<label id="people_num"><h5></h5></label>&nbsp&nbsp/&nbsp&nbsp车辆数：<label id="car_num"><h5></h5></label>
+    </td>
+    </tr>
+  </table>
+  </div>
+
+</div>
+
+</body>
+<script type="text/javascript">
+    if (getUrlParam("userName")) {
+      var userName = getUrlParam("userName");
+    }
+    else {
+      window.location.href = "/";
+    }
+
+    var date = new Date().toLocaleDateString();
+    var dateList = date.split('/');
+    var today = dateList[1] + '月' + dateList[2] + '日';
+    $.get('/weatherFormat.json', "", function(res) {
+        var forecast = res['data']['forecast'];
+        $("#today").text(dateList[1] + '月'+ forecast[0]['date']);
+        $("#high").text(forecast[0]['high']);
+        $("#low").text(forecast[0]['low']);
+        $("#type").text(forecast[0]['type']);
+    });
+    $.get('/getAppointMsgToday', "date="+today, function(res) {
+        $("#people_num").text(res['p_num']);
+        $("#car_num").text(res['car_num']);
+    });
+
+    $("#toModifyPass").attr('href', '/user_personalcenter_passwchange.html?userName=' + userName);
+    $("#toMyAppoint").attr('href', '/user_personalcenter_myreservation.html?userName=' + userName);
+    $("#toAppointApply").attr('href', '/user_onlineappointment_apply.html?userName=' + userName);
+    $("#toAppointLeft").attr('href', '/user_onlineappointment_left.html?userName=' + userName);
+    $("#toSfAuthen").attr('href', '/user_personalcenter_schoolfellow.html?userName=' + userName);
+    $("#toScauBulletin").attr('href', '/user_scaunews_bulletin.html?userName=' + userName);
+    $("#toScauStrategy").attr('href', '/user_scaunews_strategy.html?userName=' + userName);
+    $("#toScauActivity").attr('href', '/user_scaunews_activity1.html?userName=' + userName);
+</script>
+</html>

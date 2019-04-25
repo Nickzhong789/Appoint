@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>华农赏花预约系统-修改密码</title>
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+  <script type="text/javascript" src="/js/jquery-1.12.3.min.js"></script>
+  <script type="text/javascript" src="/js/func.js"></script>  <style> body, html{
+            height: 100%;
+            width: 100%;
+            margin: 0; padding: 0;
+        } </style>
+</head>
+
+<body style="background-color:rgba(204,204,204,0.2)" width:100%; height:100%>
+<div class="container-fluid">
+  <div class="row">
+    <div class="page-header" style="background-color:rgba(255,255,255,0.6);">
+      <table  width="100%" height="100px" margin="0" style="vertical-align:bottom" >
+        <tr>
+        <th><h4> &nbsp &nbsp <img src="/img/scau_logol.png" alt="华农logo" margin:"0"></h4></th>
+
+        <td style="text-align:left; vertical-align:bottom">
+            <label id="today"></label><br>
+            <label id="high"><h5></h5></label>/
+            <label id="low"><h5></h5></label>/
+            <label id="type"><h5></h5></label>
+        </td>
+
+        <td style="text-align:left; vertical-align:bottom">
+            <label>华农实时：</label><br>
+            游客数：<label id="people_num"><h5></h5></label>&nbsp&nbsp/&nbsp&nbsp车辆数：<label id="car_num"><h5></h5></label>
+        </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+
+  <div class="row">
+
+    <div class="col-sm-1" style="background-color:rgba(0,0,0,0); height:100px"></div>
+
+    <div class="col-sm-2" style="background-color:rgba(204, 204, 204, 0.5);(255,255,255); height:535px; ">
+        <div class="col-sm-2" style="text-align:center; background-color:rgba(255,255,255,1); width:100%; margin-top:20px; padding:0">
+        <ul class="nav nav-pills nav-stacked">
+            <li><h4>个人中心</h4></li>
+            <li role="presentation"><a href="#" id="toSfAuthen">校友认证</a></li>
+            <li role="presentation" class="active"><a href="#">修改密码</a></li>
+            <li role="presentation"><a href="#" id="toMyAppoint">我的预约</a></li>
+        </ul>
+        </div>
+
+        <div class="col-sm-2" style="text-align:center; background-color:rgba(255,255,255,1); width:100%; margin-top:20px; padding:0">
+        <ul class="nav nav-pills nav-stacked">
+            <li><h4>在线预约</h4></li>
+            <li role="presentation"><a href="#" id="toAppointLeft">预约余量</a></li>
+            <li role="presentation"><a href="#" id="toAppointApply">预约申请</a></li>
+        </ul>
+        </div>
+
+        <div class="col-sm-2" style="text-align:center; background-color:rgba(255,255,255,1); width:100%; margin-top:20px; padding:0">
+        <ul class="nav nav-pills nav-stacked">
+            <li><h4>华农资讯</h4></li>
+            <li role="presentation"><a href="#" id="toScauBulletin">公&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp告</a></li>
+            <li role="presentation"><a href="#" id="toScauStrategy">华农攻略</a></li>
+            <li role="presentation"><a href="#" id="toScauActivity">华农活动</a></li>
+        </ul>
+        </div>
+    </div>
+
+    <div class="col-sm-8" style="background-color:rgb(255,255,255); height:510px;  margin-left:50px;">
+      <table class="table" style="background-color:white; width:50%; margin:30px auto auto auto; ">
+        <tbody>
+        <tr>
+          <th class="success" colspan="2"><h4 align="center"><strong>修改密码</strong></h4></th>
+        </tr>
+        <tr>
+          <td align="right" ><label for="primarypassword"><h4>原密码：</label></td>
+          <td ><input type="password" class="form-control" id="pre_pass" placeholder="Primary Password"></td>
+        </tr>
+
+        <tr>
+          <td align="right"><label for="primarypassword"><h4>新密码：</label></td>
+          <td><input type="password" class="form-control" id="new_pass" placeholder="New Password"></td>
+        </tr>
+
+        <tr>
+          <td align="right"><label for="primarypassword"><h4>确认新密码：</label></td>
+          <td><input type="password" class="form-control" id="ensure_pass" placeholder="Ensure the New Password"></td>
+        </tr>
+
+        <tr>
+          <td colspan="2" ><h5 align="center"><font color="red" id="msg"></font><h5></td>
+        </tr>
+
+        <tr>
+          <td colspan="2" align="center"><button class="btn btn-default" type="button" id="btn">确认</button></td>
+        </tr>
+      </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  if (getUrlParam("userName")) {
+    var userName = getUrlParam("userName");
+  }
+  else {
+    window.location.href = "/";
+  }
+
+  var date = new Date().toLocaleDateString();
+  var dateList = date.split('/');
+  var today = dateList[1] + '月' + dateList[2] + '日';
+  $.get('/weatherFormat.json', "", function(res) {
+      var forecast = res['data']['forecast'];
+      $("#today").text(dateList[1] + '月'+ forecast[0]['date']);
+      $("#high").text(forecast[0]['high']);
+      $("#low").text(forecast[0]['low']);
+      $("#type").text(forecast[0]['type']);
+  });
+  $.get('/getAppointMsgToday', "date="+today, function(res) {
+      $("#people_num").text(res['p_num']);
+      $("#car_num").text(res['car_num']);
+  });
+
+  var _data = {};
+  var url = "/modifyUserPass";
+
+  var modifyPassword = function() {
+    var pre_pass = $("#pre_pass").val();
+    var new_pass = $("#new_pass").val();
+    var ensure_pass = $("#ensure_pass").val();
+
+    if (!pre_pass) {
+      $("#msg").text("当前密码不能为空");
+    }
+    else if (!new_pass) {
+      $("#msg").text("请输入新密码");
+    }
+    else if (!ensure_pass) {
+      $("#msg").text("请确认新密码");
+    }
+    else if (pre_pass == new_pass) {
+      $("#msg").text("新密码不能与原始密码相同");
+    }
+    else if (new_pass != ensure_pass) {
+      $("#msg").text("两次输入密码不一致");
+    }
+    else {
+        _data['userName'] = userName;
+        _data['pre_pass'] = pre_pass;
+        _data['new_pass'] = new_pass;
+        var jsonData = JSON.stringify(_data);
+
+        $.ajax({
+          type: 'POST',
+          data: jsonData,
+          url: url,
+          contentType: "application/json;charset=UTF-8",
+          success: function(res) {
+            if (res['status']) {
+              $("#msg").text(res['msg']);
+              setTimeout('window.location.href = "/"', 3000);
+            }
+            else {
+              $("#msg").text(res['msg']);
+            }
+        }
+      });
+    }
+  }
+
+  $("#btn").on('click', modifyPassword);
+
+  $("#toModifyPass").attr('href', '/user_personalcenter_passwchange.html?userName=' + userName);
+  $("#toMyAppoint").attr('href', '/user_personalcenter_myreservation.html?userName=' + userName);
+  $("#toAppointApply").attr('href', '/user_onlineappointment_apply.html?userName=' + userName);
+  $("#toAppointLeft").attr('href', '/user_onlineappointment_left.html?userName=' + userName);
+  $("#toSfAuthen").attr('href', '/user_personalcenter_schoolfellow.html?userName=' + userName);
+  $("#toScauBulletin").attr('href', '/user_scaunews_bulletin.html?userName=' + userName);
+  $("#toScauStrategy").attr('href', '/user_scaunews_strategy.html?userName=' + userName);
+  $("#toScauActivity").attr('href', '/user_scaunews_activity1.html?userName=' + userName);
+</script>
+</body>
+</html>
